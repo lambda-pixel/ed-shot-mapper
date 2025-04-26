@@ -89,7 +89,18 @@ def main():
     path_cmdr_log = os.path.join(os.path.expanduser('~'), 'Saved Games', 'Frontier Developments', 'Elite Dangerous')
     path_screenshots = sys.argv[1]
 
-    path_output = 'out'
+    # determine if application is a script file or frozen exe
+    if getattr(sys, 'frozen', False):
+        # If the application is run as a bundle, the PyInstaller bootloader
+        # extends the sys module by a flag frozen=True and sets the app 
+        # path into variable _MEIPASS'.
+        application_path = os.path.dirname(sys.executable)
+    else:
+        application_path = os.path.dirname(os.path.abspath(__file__))
+
+    path_output = os.path.join(application_path, 'out')
+
+    print(path_output)
 
     # Read and consolidate all journal files
     print(f'Reading commander log files from {path_cmdr_log}')
