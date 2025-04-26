@@ -15,5 +15,7 @@ If you directly download the Python file, you just have to gives in the command 
 python ed-shot-mapper.py screenshot.jpg
 ```
 
+**KEEP YOUR ORIGINAL FILES**: The created copy does not have the same creation date as the original file - it won't be usable again with this utility.
+
 ## Future plans
 If finding time to enhance the application, would be nice to further detail the position (station / body) and provide an option to let user format the output.
