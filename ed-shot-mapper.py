@@ -90,6 +90,7 @@ def guess_location_from_timestamp(timestamp, journal_data):
 def main():    
     path_cmdr_log = os.path.join(os.path.expanduser('~'), 'Saved Games', 'Frontier Developments', 'Elite Dangerous')
     path_screenshots = sys.argv[1]
+    shots_ext = ['.jpg', '.bmp', '.png', '.mp4', '.mkv', '.avi', '.mov']
 
     # determine if application is a script file or frozen exe
     if getattr(sys, 'frozen', False):
@@ -126,7 +127,7 @@ def main():
         path_images = [path_screenshots]
     else:
         for file_name in os.listdir(path_screenshots):
-            if file_name.endswith(".jpg") or file_name.endswith(".bmp"):
+            if file_name.endswith(tuple(shots_ext)):
                 path_images.append(os.path.join(path_screenshots, file_name))
 
     # Link each screenshot to a location
