@@ -24,22 +24,24 @@ def retrieve_journal(file_path):
     return None
 
 
-def creation_date(path_to_file):
+def date_file(path_to_file):
     """
     Try to get the date that a file was created, falling back to when it was
     last modified if that isn't possible.
     See http://stackoverflow.com/a/39501288/1709587 for explanation.
     """
+    modified_time = int(datetime.fromtimestamp(os.path.getmtime(path_to_file), timezone.utc).timestamp())
+
     if platform.system() == 'Windows':
-        return int(datetime.fromtimestamp(os.path.getctime(path_to_file), timezone.utc).timestamp())
+        return min(int(datetime.fromtimestamp(os.path.getctime(path_to_file), timezone.utc).timestamp()), modified_time)
     else:
         stat = os.stat(path_to_file)
         try:
-            return int(datetime.fromtimestamp(stat.st_birthtime, timezone.utc).timestamp())
+            return min(int(datetime.fromtimestamp(stat.st_birthtime, timezone.utc).timestamp()), modified_time)
         except AttributeError:
             # We're probably on Linux. No easy way to get creation dates here,
             # so we'll settle for when its content was last modified.
-            return int(datetime.fromtimestamp(stat.st_mtime, timezone.utc).timestamp())
+            return min(int(datetime.fromtimestamp(stat.st_mtime, timezone.utc).timestamp()), modified_time)
 
 
 def find_journal_for_screenshot(timestamp, journal_data):
@@ -138,7 +140,7 @@ def main():
             print(f"Screenshot not found: {path_image}")
             continue
 
-        timestamp_screenshot = creation_date(path_image)
+        timestamp_screenshot = date_file(path_image)
         
         e = find_journal_for_screenshot(timestamp_screenshot, journal_data)
         
