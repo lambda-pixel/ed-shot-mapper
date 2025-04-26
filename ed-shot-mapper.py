@@ -144,8 +144,7 @@ def main():
         screenshot_locations[path_image] = system_found, timestamp_screenshot
 
     # Copy each matched screenshot to the output folder
-    if not os.path.exists(path_output):
-        os.makedirs(path_output)
+    os.makedirs(path_output, exist_ok=True)
 
     for path_image in path_images:
         if path_image in screenshot_locations:
