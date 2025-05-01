@@ -85,11 +85,18 @@ def guess_location_from_timestamp(timestamp, journal_data):
         curr_key_idx -= 1
 
     return system_found
-    
 
-def main():    
+
+def main():
+    if len(sys.argv) < 2:
+        print("You need to drag and drop a folder with screenshots onto this script")
+        print("or use the command line: python ed-shot-mapper.py <path_to_screenshots>")
+        input("Press enter to exit...")
+
+        sys.exit(1)
+
     path_cmdr_log = os.path.join(os.path.expanduser('~'), 'Saved Games', 'Frontier Developments', 'Elite Dangerous')
-    path_screenshots = sys.argv[1]
+    paths_screenshots = sys.argv[1:]
     shots_ext = ['.jpg', '.bmp', '.png', '.mp4', '.mkv', '.avi', '.mov']
 
     # determine if application is a script file or frozen exe
@@ -123,12 +130,13 @@ def main():
     # Get all screenshots paths
     path_images = []
     
-    if os.path.isfile(path_screenshots):
-        path_images = [path_screenshots]
-    else:
-        for file_name in os.listdir(path_screenshots):
-            if file_name.endswith(tuple(shots_ext)):
-                path_images.append(os.path.join(path_screenshots, file_name))
+    for path_screenshots in paths_screenshots:
+        if os.path.isfile(path_screenshots):
+            path_images.append(path_screenshots)
+        else:
+            for file_name in os.listdir(path_screenshots):
+                if file_name.endswith(tuple(shots_ext)):
+                    path_images.append(os.path.join(path_screenshots, file_name))
 
     # Link each screenshot to a location
     screenshot_locations = {}
