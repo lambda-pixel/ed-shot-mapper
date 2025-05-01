@@ -5,6 +5,9 @@ This is a small utility to retrieve location of screeshots from your CMDR journa
 This is a quick and dirty written script. While it shall not overwrite and mess up your files, use it at your own risk ;-)
 
 ## Usage
+
+You can check for the latest release here: https://github.com/lambda-pixel/ed-shot-mapper/releases
+
 Just download the lastest executable from the Releases. Then, you'll need to drag and drop a folder or a `.bmp` or `.jpg` file on the executable. It will create a `out` folder with a copy of the files next to the executable.
 
 You can also use the CLI to provide the path of the file you want to tag
