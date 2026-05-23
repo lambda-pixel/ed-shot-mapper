@@ -172,7 +172,7 @@ def main():
         if path_image in screenshot_locations:
             image_ext = os.path.splitext(path_image)[-1][1:]
             system_name, timestamp = screenshot_locations[path_image]
-            system_name = system_name.replace(":", "_").replace("/", "_")
+            system_name = system_name.replace(":", "_").replace("/", "_").replace("*","")
 
             datestr = datetime.fromtimestamp(timestamp, timezone.utc).strftime("%Y-%m-%d %H-%M-%S")
 
